@@ -3,7 +3,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 module.exports = {
     tokenGenerate: (payload) => {
-        return jwt.sign(payload, JWT_SECRET)
+        return jwt.sign(payload, process.env.JWT_SECRET)
     },
     varify: (token) => {
         return jwt.verify(token, JWT_SECRET)
