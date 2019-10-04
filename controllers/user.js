@@ -66,7 +66,7 @@ class UserController {
                 }
             })
             .then(user => {
-                const token = generateToken({
+                const token = tokenGenerate({
                     id: user._id
                 })
                 res.status(201).json({
