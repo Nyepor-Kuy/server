@@ -1,4 +1,4 @@
-const { axiosFlight, axiosWeather, axiosEvent } = require('../config/axios')
+const { axiosFlight, axiosWeather, axiosEvent, axiosYoutube } = require('../config/axios')
 
 class PegiPegiController {
 
@@ -99,9 +99,14 @@ class PegiPegiController {
       url: `?location.address=${address}&start_date.keyword=this_week`
     }))
 
+    promises.push(axiosYoutube({
+      method: 'get',
+      url: `/search?key=${process.env.YOUTUBE_KEY}&part=id&q=wonderful+${address}`
+    }))
+
     return Promise.all(promises)
       .then(response => {
-        res.status(200).json({ weather: response[0].data, flight: response[1].data, event: response[2].data })
+        res.status(200).json({ weather: response[0].data, flight: response[1].data, event: response[2].data, youtube: response[3].data })
       })
       .catch(next)
   }
