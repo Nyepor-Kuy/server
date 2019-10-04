@@ -1,11 +1,12 @@
-const { axiosFlight,  axiosWeather, axiosEvent } = require('../config/axios')
+const { axiosFlight, axiosWeather, axiosEvent } = require('../config/axios')
 
 class PegiPegiController {
 
-  static find ( req, res, next) {
+  static find(req, res, next) {
     let promises = []
     let lat = null, lng = null, address = null
-    let {originplace, destinationplace, outboundpartialdate} = req.body
+    let { originplace, destinationplace, outboundpartialdate } = req.body
+    console.log({ originplace, destinationplace, outboundpartialdate })
 
     const library = {
       Jakarta: {
@@ -71,13 +72,13 @@ class PegiPegiController {
     }
 
     for (let key in library) {
-      if(key === destinationplace) {
+      if (key === destinationplace) {
         destinationplace = library[key].airportcode
         lat = library[key].lat
         lng = library[key].lng
         address = library[key].address
       }
-      if(key === originplace) {
+      if (key === originplace) {
         originplace = library[key].airportcode
       }
     }
@@ -99,10 +100,10 @@ class PegiPegiController {
     }))
 
     return Promise.all(promises)
-    .then(response => {
-     res.status(200).json({wether : response[0].data, flight : response[1].data, event : response[2].data})
-    })
-    .catch(next)
+      .then(response => {
+        res.status(200).json({ weather: response[0].data, flight: response[1].data, event: response[2].data })
+      })
+      .catch(next)
   }
 
 }

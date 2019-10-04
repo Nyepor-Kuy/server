@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const pegipegiController = require('../controllers/pegipegi')
 
-routes.get('/', pegipegiController.find)
+routes.post('/', pegipegiController.find)
 
 module.exports = routes
